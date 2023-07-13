@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Greetings">
+          <Key>
+            <PropertyRef Name="GreetingID" />
+          </Key>
+          <Property Name="GreetingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Gretting_Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Industry_Worked">
+          <Key>
+            <PropertyRef Name="Industry_id" />
+          </Key>
+          <Property Name="Industry_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Industry_name" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Profile_Industry_Intermediate_Table">
+          <Key>
+            <PropertyRef Name="PT_IW_ID" />
+          </Key>
+          <Property Name="PT_IW_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="profile_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Industry_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profile_table">
+          <Key>
+            <PropertyRef Name="email_address" />
+          </Key>
+          <Property Name="profile_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email_address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="greeting" Type="nchar" MaxLength="10" />
+          <Property Name="first_name" Type="nchar" MaxLength="50" />
+          <Property Name="last_name" Type="nchar" MaxLength="50" />
+          <Property Name="postal_code" Type="nchar" MaxLength="10" />
+          <Property Name="primary_phone_Number" Type="nchar" MaxLength="20" />
+          <Property Name="Industry_worked" Type="nchar" MaxLength="20" />
+          <Property Name="resume_location" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Terms_Conditions">
+          <Key>
+            <PropertyRef Name="T&amp;C_ID" />
+          </Key>
+          <Property Name="T&amp;C_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="T&amp;C_Description" Type="nchar" MaxLength="250" Nullable="false" />
+          <Property Name="IS_Checked" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Table_Industry_Table">
+          <End Role="Industry_Worked" Type="Self.Industry_Worked" Multiplicity="1" />
+          <End Role="Profile_Industry_Intermediate_Table" Type="Self.Profile_Industry_Intermediate_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Industry_Worked">
+              <PropertyRef Name="Industry_id" />
+            </Principal>
+            <Dependent Role="Profile_Industry_Intermediate_Table">
+              <PropertyRef Name="Industry_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Profile_Table">
+          <End Role="Profile_table" Type="Self.Profile_table" Multiplicity="1" />
+          <End Role="Profile_Industry_Intermediate_Table" Type="Self.Profile_Industry_Intermediate_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile_table">
+              <PropertyRef Name="email_address" />
+            </Principal>
+            <Dependent Role="Profile_Industry_Intermediate_Table">
+              <PropertyRef Name="profile_Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Greetings" EntityType="Self.Greetings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Industry_Worked" EntityType="Self.Industry_Worked" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile_Industry_Intermediate_Table" EntityType="Self.Profile_Industry_Intermediate_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile_table" EntityType="Self.Profile_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Terms_Conditions" EntityType="Self.Terms_Conditions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Table_Industry_Table" Association="Self.FK_Table_Industry_Table">
+            <End Role="Industry_Worked" EntitySet="Industry_Worked" />
+            <End Role="Profile_Industry_Intermediate_Table" EntitySet="Profile_Industry_Intermediate_Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Profile_Table" Association="Self.FK_Table_Profile_Table">
+            <End Role="Profile_table" EntitySet="Profile_table" />
+            <End Role="Profile_Industry_Intermediate_Table" EntitySet="Profile_Industry_Intermediate_Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Profile_table">
+          <Key>
+            <PropertyRef Name="email_address" />
+          </Key>
+          <Property Name="profile_id" Type="Guid" Nullable="false" />
+          <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="greeting" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="primary_phone_Number" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Industry_worked" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="resume_location" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Profile_Industry_Intermediate_Table" Relationship="DBModel.FK_Table_Profile_Table" FromRole="Profile_table" ToRole="Profile_Industry_Intermediate_Table" />
+        </EntityType>
+        <EntityContainer Name="ProfileDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Profile_table" EntityType="Self.Profile_table" />
+          <EntitySet Name="Greetings" EntityType="DBModel.Greeting" />
+          <EntitySet Name="Industry_Worked" EntityType="DBModel.Industry_Worked" />
+          <EntitySet Name="Terms_Conditions" EntityType="DBModel.Terms_Conditions" />
+          <EntitySet Name="Profile_Industry_Intermediate_Table" EntityType="DBModel.Profile_Industry_Intermediate_Table" />
+          <AssociationSet Name="FK_Table_Industry_Table" Association="DBModel.FK_Table_Industry_Table">
+            <End Role="Industry_Worked" EntitySet="Industry_Worked" />
+            <End Role="Profile_Industry_Intermediate_Table" EntitySet="Profile_Industry_Intermediate_Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Profile_Table" Association="DBModel.FK_Table_Profile_Table">
+            <End Role="Profile_table" EntitySet="Profile_table" />
+            <End Role="Profile_Industry_Intermediate_Table" EntitySet="Profile_Industry_Intermediate_Table" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Greeting">
+          <Key>
+            <PropertyRef Name="GreetingID" />
+          </Key>
+          <Property Name="GreetingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Gretting_Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Industry_Worked">
+          <Key>
+            <PropertyRef Name="Industry_id" />
+          </Key>
+          <Property Name="Industry_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Industry_name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Profile_Industry_Intermediate_Table" Relationship="DBModel.FK_Table_Industry_Table" FromRole="Industry_Worked" ToRole="Profile_Industry_Intermediate_Table" />
+        </EntityType>
+        <EntityType Name="Terms_Conditions">
+          <Key>
+            <PropertyRef Name="T_C_ID" />
+          </Key>
+          <Property Name="T_C_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="T_C_Description" Type="String" Nullable="false" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="IS_Checked" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profile_Industry_Intermediate_Table">
+          <Key>
+            <PropertyRef Name="PT_IW_ID" />
+          </Key>
+          <Property Name="PT_IW_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="profile_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Industry_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Industry_Worked" Relationship="DBModel.FK_Table_Industry_Table" FromRole="Profile_Industry_Intermediate_Table" ToRole="Industry_Worked" />
+          <NavigationProperty Name="Profile_table" Relationship="DBModel.FK_Table_Profile_Table" FromRole="Profile_Industry_Intermediate_Table" ToRole="Profile_table" />
+        </EntityType>
+        <Association Name="FK_Table_Industry_Table">
+          <End Type="DBModel.Industry_Worked" Role="Industry_Worked" Multiplicity="1" />
+          <End Type="DBModel.Profile_Industry_Intermediate_Table" Role="Profile_Industry_Intermediate_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Industry_Worked">
+              <PropertyRef Name="Industry_id" />
+            </Principal>
+            <Dependent Role="Profile_Industry_Intermediate_Table">
+              <PropertyRef Name="Industry_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Profile_Table">
+          <End Type="DBModel.Profile_table" Role="Profile_table" Multiplicity="1" />
+          <End Type="DBModel.Profile_Industry_Intermediate_Table" Role="Profile_Industry_Intermediate_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile_table">
+              <PropertyRef Name="email_address" />
+            </Principal>
+            <Dependent Role="Profile_Industry_Intermediate_Table">
+              <PropertyRef Name="profile_Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="ProfileDBContext">
+          <EntitySetMapping Name="Profile_table">
+            <EntityTypeMapping TypeName="DBModel.Profile_table">
+              <MappingFragment StoreEntitySet="Profile_table">
+                <ScalarProperty Name="profile_id" ColumnName="profile_id" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="greeting" ColumnName="greeting" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="primary_phone_Number" ColumnName="primary_phone_Number" />
+                <ScalarProperty Name="Industry_worked" ColumnName="Industry_worked" />
+                <ScalarProperty Name="resume_location" ColumnName="resume_location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Greetings">
+            <EntityTypeMapping TypeName="DBModel.Greeting">
+              <MappingFragment StoreEntitySet="Greetings">
+                <ScalarProperty Name="Gretting_Name" ColumnName="Gretting_Name" />
+                <ScalarProperty Name="GreetingID" ColumnName="GreetingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Industry_Worked">
+            <EntityTypeMapping TypeName="DBModel.Industry_Worked">
+              <MappingFragment StoreEntitySet="Industry_Worked">
+                <ScalarProperty Name="Industry_name" ColumnName="Industry_name" />
+                <ScalarProperty Name="Industry_id" ColumnName="Industry_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terms_Conditions">
+            <EntityTypeMapping TypeName="DBModel.Terms_Conditions">
+              <MappingFragment StoreEntitySet="Terms_Conditions">
+                <ScalarProperty Name="IS_Checked" ColumnName="IS_Checked" />
+                <ScalarProperty Name="T_C_Description" ColumnName="T&amp;C_Description" />
+                <ScalarProperty Name="T_C_ID" ColumnName="T&amp;C_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile_Industry_Intermediate_Table">
+            <EntityTypeMapping TypeName="DBModel.Profile_Industry_Intermediate_Table">
+              <MappingFragment StoreEntitySet="Profile_Industry_Intermediate_Table">
+                <ScalarProperty Name="Industry_id" ColumnName="Industry_id" />
+                <ScalarProperty Name="profile_Email" ColumnName="profile_Email" />
+                <ScalarProperty Name="PT_IW_ID" ColumnName="PT_IW_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

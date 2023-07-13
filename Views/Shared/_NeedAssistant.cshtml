@@ -1,0 +1,23 @@
+﻿
+<div class="container_assistant" >
+    <img src="~/Content_Images/assistant.jpg"/ alt="Need Assistance?" onclick="toggleText()">
+    <div class="assistant_text" id="displayText" style="display:none">
+        Call at 1800 -000- 001 to seek help
+    </div>
+</div>
+
+<script>
+function toggleText() {
+    var text = document.getElementById("displayText");
+    text.style.display = text.style.display === "none" ? "block" : "none";
+    } 
+
+    </Script>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/custom")
+}
+
+@section Style{
+    @Styles.Render("~/Content/Custom")
+}*@

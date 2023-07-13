@@ -1,0 +1,115 @@
+﻿@model MyProjectProfile.Models.CompleteProfile
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*https://localhost:44321/ABCompanyURL/Profile*@
+
+@Html.Partial("_NeedAssistant")
+
+@if (Session["Message"] != null)
+            {
+                @Html.Label("message", Session["Message"].ToString(), new { style="font-weight:bold; color:Red"})
+            }
+
+@using (Html.BeginForm("PostProfile", "ABCompanyURL", FormMethod.Post,new { @enctype="multipart/form-data"}))
+{
+
+    <div>
+        @Html.Label("heading", "FILL OUT YOUR DETAILS",
+            new { style = "font-weight:bold" })
+    </div>
+    <br />
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(
+            model => model.ProfileTable.email_address,
+            new { @class = "control-label col-md-2" })
+
+        @Html.TextBoxFor(
+            model => model.ProfileTable.email_address,
+            new { @classs = "form-control" })
+
+        @Html.ValidationMessageFor(model => model.ProfileTable.email_address)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.greeting, new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(model => model.ProfileTable.greeting,
+        Model.Greeting,
+       "Select the Greeting"
+       , new { @classs = "form-control" })
+
+        @Html.ValidationMessageFor(model => model.ProfileTable.greeting)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.first_name, new { @class = "control-label col-md-2" })
+        @Html.TextBoxFor(model => model.ProfileTable.first_name, new { @classs = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProfileTable.first_name)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.last_name, new { @class = "control-label col-md-2" })
+        @Html.TextBoxFor(model => model.ProfileTable.last_name, new { @classs = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProfileTable.last_name)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.postal_code, new { @class = "control-label col-md-2" })
+        @Html.TextBoxFor(model => model.ProfileTable.postal_code, new { @classs = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProfileTable.postal_code)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.primary_phone_Number, new { @class = "control-label col-md-2" })
+        @Html.TextBoxFor(model => model.ProfileTable.primary_phone_Number, new { @classs = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProfileTable.email_address)
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProfileTable.Industry_worked, new { @class = "control-label col-md-2" })
+        @Html.ListBoxFor(model => model.ProfileTable.Industry_worked, Model.Industry_Worked, new { @classs = "form-control" })
+    </div>
+    <br />
+    <br />
+
+    <div class="form-group">
+        @Html.Label("resumeHeading", "Upload your resume",
+             new { style = "font-weight:bold" })
+
+        @Html.Label("resumeHeading", "File must be in .doc or pdf and must be no longer than 4MB",
+            new { style = "font-weight:bold" })
+        <br />
+        @Html.Label("profile_Resume"," Resume*")
+        <input type="file"  name="Profile_Resume"/>
+    </div>
+
+    <br /> 
+    <br />
+    <div class="form-group">
+        @Html.Label("terms&Conditions", " Terms and Conditions", new { style = "font-weight:bold", @class = "control-label col-md-2" })
+        <br />
+        @Html.Label("terms&ConditionsNote", " Please confirm you have read our terms and conditions", 
+            new { style = "font-weight:bold", @class = "control-label" })
+        <br />
+        @for (int i = 0; i < Model.Terms_Conditions.Count; i++)
+        {
+            @Html.CheckBoxFor(model => model.Terms_Conditions[i].IS_Checked)
+            @Html.LabelFor(model => model.Terms_Conditions[i].T_C_Description, Model.Terms_Conditions[i].T_C_Description)
+            <br />
+        }
+
+    </div>
+
+    <div>
+        <input type="submit" value="Submit Details" />
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

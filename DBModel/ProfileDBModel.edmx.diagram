@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1f5d4d0087c447ba82a7880af18c7765" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Profile_table" Width="1.5" PointX="4.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Greeting" Width="1.5" PointX="6.625" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.Industry_Worked" Width="1.5" PointX="1.625" PointY="0.875" FillColor="MidnightBlue" />
+        <EntityTypeShape EntityType="DBModel.Terms_Conditions" Width="3.5" PointX="6.625" PointY="2.375" />
+        <EntityTypeShape EntityType="DBModel.Profile_Industry_Intermediate_Table" Width="3.5" PointX="0.5" PointY="4" />
+        <AssociationConnector Association="DBModel.FK_Table_Industry_Table" />
+        <AssociationConnector Association="DBModel.FK_Table_Profile_Table" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
